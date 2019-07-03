@@ -2,7 +2,7 @@ export default class Model {
   constructor(data = []) {
     this.$collection = [];
 
-    if(data.length)
+    if (data.length)
       this.record(data)
   }
 
@@ -10,8 +10,12 @@ export default class Model {
     this.$collection.push(...data);
   }
   all() {
-    return this.$collection;
+    return this.$collection.map(entry => Object.assign({}, entry));
   }
-  find() {}
-  update() {}
+  find(value) {
+    const primaryKey = 'id';
+    const entry = this.$collection.find(entry => entry[primaryKey] === value);
+    return entry ? Object.assign({}, entry) : null;
+  }
+  update() { }
 }
